@@ -12,7 +12,6 @@ const App = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
   const [sectionHeight, setSectionHeight] = useState(window.innerHeight);
-  const [triggerAnimation, setTriggerAnimation] = useState(false);
 
   // Responsive resize
   useEffect(() => {
@@ -21,18 +20,6 @@ const App = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const triggerPoint = window.innerHeight * 0.5;
-      if (scrollY > triggerPoint && !triggerAnimation) {
-        setTriggerAnimation(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [triggerAnimation]);
   const sections = [
     {
       title: "Welcome",
@@ -162,11 +149,7 @@ const App = () => {
       {/* Star Background */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={
-          triggerAnimation
-            ? { opacity: 1, top: finalTop }
-            : { opacity: 0, top: "0vh" }
-        }
+        animate={{ opacity: 1, top: finalTop }}
         transition={{
           duration: 0.75,
           ease: "easeIn",
@@ -183,7 +166,7 @@ const App = () => {
         }}
       >
         <Canvas camera={{ position: [0, 0, 200], fov: 60 }}>
-          <StarsEffect triggerAnimation={triggerAnimation} />
+          <StarsEffect triggerAnimation={true} />
         </Canvas>
       </motion.div>
 
