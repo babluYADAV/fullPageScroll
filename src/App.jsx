@@ -245,7 +245,7 @@ const App = () => {
               zIndex: 1001,
             }}
           >
-            {currentSection + 1} / {sections.length}
+            {currentSection + 1} / {sections.length - 1}
           </div>
 
           {/* Skip Button */}
